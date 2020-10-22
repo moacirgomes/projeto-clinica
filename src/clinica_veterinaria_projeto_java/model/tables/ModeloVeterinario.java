@@ -6,12 +6,13 @@
 package clinica_veterinaria_projeto_java.model.tables;
 
 import java.util.ArrayList;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Junior
  */
-public class ModeloVeterinario extends AbstractMethodError{
+public class ModeloVeterinario extends AbstractTableModel{
     
    private  ArrayList linhas = null;
    private String[] colunas = null;

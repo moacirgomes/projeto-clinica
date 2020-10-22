@@ -9,10 +9,17 @@ public class Veterinario {
 	public Veterinario() {
 		
 	}
-	public Veterinario(String nome, String crm, String especialista) {
+	public Veterinario(String nome, String crmv, String especialista) {
 		this.nome = nome;
 		this.crmv = crmv;
 		this.especialista = especialista;
+	}
+        
+        public Veterinario(Integer id,String nome, String crmv, String especialista) {
+            this.idVeterinario = id;	
+            this.nome = nome;
+            this.crmv = crmv;
+            this.especialista = especialista;
 	}
 
 	public Integer getIdVeterinario() {

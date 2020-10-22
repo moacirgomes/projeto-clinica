@@ -29,9 +29,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jItenalFrame = new javax.swing.JInternalFrame();
-        jPaneldeFundo = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabeSistemadeG = new javax.swing.JLabel();
         jLabelFundoPricipal = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
@@ -62,20 +59,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         }
         jItenalFrame.setVisible(true);
         jItenalFrame.getContentPane().setLayout(null);
-
-        jPaneldeFundo.setBackground(new java.awt.Color(255, 255, 255));
-        jPaneldeFundo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPaneldeFundo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPaneldeFundo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 50, 60));
-
-        jItenalFrame.getContentPane().add(jPaneldeFundo);
-        jPaneldeFundo.setBounds(10, 40, 950, 320);
-
-        jLabeSistemadeG.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabeSistemadeG.setText("Sistema de Gerenciamento :");
-        jItenalFrame.getContentPane().add(jLabeSistemadeG);
-        jLabeSistemadeG.setBounds(10, 10, 200, 17);
-
         getContentPane().add(jItenalFrame);
         jItenalFrame.setBounds(-10, 120, 980, 400);
 
@@ -173,15 +156,12 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuSair;
     private javax.swing.JInternalFrame jItenalFrame;
-    private javax.swing.JLabel jLabeSistemadeG;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelFundoPricipal;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuCadastroCA;
     private javax.swing.JMenuItem jMenuCadastroV;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPaneldeFundo;
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenu menuConsulta;
     private javax.swing.JMenu menuLaboratorio;

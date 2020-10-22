@@ -6,6 +6,7 @@
 package clinica_veterinaria_projeto_java.model.facade;
 
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface VeterinarioFacade {
     void salvar(Veterinario vet);
     void remover(Veterinario vet);
     void editar(Veterinario vet);
-    List<Veterinario> listarTodos();
+    ArrayList listarTodos();
     
     
 }

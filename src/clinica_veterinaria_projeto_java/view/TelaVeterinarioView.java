@@ -7,7 +7,11 @@ package clinica_veterinaria_projeto_java.view;
 
 import clinica_veterinaria_projeto_java.controller.VeterinarioController;
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
+import clinica_veterinaria_projeto_java.model.tables.ModeloVeterinario;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,6 +24,7 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
      */
     public TelaVeterinarioView() {
         initComponents();
+        preencherTabela();
     }
 
     /**
@@ -43,10 +48,10 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
         jButton3Editar = new javax.swing.JButton();
         jButton4Cancelar = new javax.swing.JButton();
         jButton5Excluir = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableVeterinarios = new javax.swing.JTable();
         textPesquisar = new javax.swing.JTextField();
         jButton6Pesquisar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbVeterinarios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -91,20 +96,20 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
 
         jButton5Excluir.setText("Excluir");
 
-        jTableVeterinarios.setModel(new javax.swing.table.DefaultTableModel(
+        jButton6Pesquisar.setText("Pesquisar");
+
+        tbVeterinarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTableVeterinarios);
-
-        jButton6Pesquisar.setText("Pesquisar");
+        jScrollPane2.setViewportView(tbVeterinarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,9 +124,9 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
                         .addComponent(jButton2Salvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3Editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4Cancelar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelNome, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -138,8 +143,10 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
                                 .addComponent(textPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton6Pesquisar))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,9 +178,9 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(textPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6Pesquisar))
-                        .addGap(17, 17, 17)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -197,16 +204,32 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_cbEspActionPerformed
 
     private void jButton2SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2SalvarActionPerformed
-       Veterinario vet = new Veterinario(textNomeV.getText(),textCrmv.getText(), cbEsp.getSelectedItem().toString());
-       VeterinarioController vetC = new VeterinarioController();
-       vetC.cadastrar(vet);
+        Veterinario vet = new Veterinario(textNomeV.getText(), textCrmv.getText(), cbEsp.getSelectedItem().toString());
+        VeterinarioController vetC = new VeterinarioController();
+        vetC.cadastrar(vet);
         System.out.println("goreti");
     }//GEN-LAST:event_jButton2SalvarActionPerformed
 
-    public void preencherTabela(){
-        ArrayList dados = new ArrayList();
-        String [] colunas = new String []{"ID","NOME","ESPECIALIDADE","CRMV"};
+    public void preencherTabela() {
+        VeterinarioController controller = new VeterinarioController();
+        ArrayList dados = controller.lista();
+        
+        String[] colunas = new String[]{"ID", "NOME", "CRMV","ESPECIALIDADE"};
+        ModeloVeterinario modelo = new ModeloVeterinario(dados, colunas);
+        tbVeterinarios.setModel(modelo);
+        tbVeterinarios.getColumnModel().getColumn(0).setPreferredWidth(23);
+        tbVeterinarios.getColumnModel().getColumn(0).setResizable(false);
+        tbVeterinarios.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tbVeterinarios.getColumnModel().getColumn(1).setResizable(false);
+        tbVeterinarios.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tbVeterinarios.getColumnModel().getColumn(2).setResizable(false);
+        tbVeterinarios.getColumnModel().getColumn(3).setPreferredWidth(80);
+        tbVeterinarios.getColumnModel().getColumn(3).setResizable(false);
+        tbVeterinarios.getTableHeader().setReorderingAllowed(false);
+        tbVeterinarios.setAutoResizeMode(tbVeterinarios.AUTO_RESIZE_OFF);
+        tbVeterinarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -252,8 +275,8 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableVeterinarios;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tbVeterinarios;
     private javax.swing.JTextField textCrmv;
     private javax.swing.JTextField textNomeV;
     private javax.swing.JTextField textPesquisar;

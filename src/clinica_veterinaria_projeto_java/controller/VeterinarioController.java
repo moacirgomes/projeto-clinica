@@ -8,22 +8,28 @@ package clinica_veterinaria_projeto_java.controller;
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
 import clinica_veterinaria_projeto_java.model.facade.VeterinarioFacade;
 import clinica_veterinaria_projeto_java.model.facade.impl.VeterinarioFacadeImpl;
+import java.util.ArrayList;
 
 /**
  *
  * @author Junior
  */
 public class VeterinarioController {
-    
+
     private VeterinarioFacadeImpl facade;
 
-	public VeterinarioController() {
+    public VeterinarioController() {
 
-		this.facade = new VeterinarioFacadeImpl();
-	}
-    public void cadastrar(Veterinario vet){
-        facade.salvar(vet);
-        
+        this.facade = new VeterinarioFacadeImpl();
     }
-    
+
+    public void cadastrar(Veterinario vet) {
+        facade.salvar(vet);
+
+    }
+
+    public ArrayList lista() {
+        return facade.listarTodos();
+    }
+
 }

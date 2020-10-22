@@ -10,6 +10,7 @@ import java.util.List;
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
 import clinica_veterinaria_projeto_java.model.dao.VeterinarioDao;
 import clinica_veterinaria_projeto_java.model.facade.VeterinarioFacade;
+import java.util.ArrayList;
 
 
 public class VeterinarioFacadeImpl implements VeterinarioFacade {
@@ -28,7 +29,7 @@ public class VeterinarioFacadeImpl implements VeterinarioFacade {
     }
     
     @Override
-    public List<Veterinario> listarTodos() {
+    public ArrayList<Veterinario> listarTodos() {
         return vetDao.listar();
     }
 

@@ -16,85 +16,85 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
+import java.util.ArrayList;
 
 public class VeterinarioDao {
+
     private static final String createTable = "CREATE TABLE IF NOT EXISTS VETERINARIO( ID INTEGER PRIMARY KEY AUTOINCREMENT, NOME VARCHAR ,CRMV VARCHAR, ESPECIALIDADE VARCHAR)";
 
-	public void salvar(Veterinario vet) {
+    public void salvar(Veterinario vet) {
 
-		try {
+        try {
 
-			Class.forName("org.sqlite.JDBC");
+            Class.forName("org.sqlite.JDBC");
 
-			try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
-				
-				Statement statement = connection.createStatement();
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
 
-				statement.execute(createTable);
+                Statement statement = connection.createStatement();
 
-				// inserindo registros
-				statement.execute("INSERT INTO VETERINARIO(NOME,CRMV, ESPECIALIDADE) VALUES ('" + vet.getNome()
-						+ "','"+vet.getCrmv()+"','"+ vet.getEspecialista()+"')");
+                statement.execute(createTable);
 
-				JOptionPane.showMessageDialog(null, "Veterinario cadastrado com sucesso!");
+                // inserindo registros
+                statement.execute("INSERT INTO VETERINARIO(NOME,CRMV, ESPECIALIDADE) VALUES ('" + vet.getNome()
+                        + "','" + vet.getCrmv() + "','" + vet.getEspecialista() + "')");
 
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null, "Erro ao inserir - " + e.getMessage());
-			}
+                JOptionPane.showMessageDialog(null, "Veterinario cadastrado com sucesso!");
 
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir - " + e.getMessage());
+            }
 
-	}
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
-	public void editar(Veterinario vet) {
+    }
 
-	}
+    public void editar(Veterinario vet) {
 
-	public void remover(Veterinario vet) {
+    }
 
-	}
+    public void remover(Veterinario vet) {
 
-	public Veterinario consultar(long id) {
+    }
 
-		return null;
+    public Veterinario consultar(long id) {
 
-	}
+        return null;
 
-	public List<Veterinario> listar() {
+    }
 
-		List<Veterinario> lista = null;
-		try {
+    public ArrayList listar() {
 
-			Class.forName("org.sqlite.JDBC");
+        ArrayList lista = new ArrayList();
+        try {
 
-			try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+            Class.forName("org.sqlite.JDBC");
 
-				// lendo os registros
-				PreparedStatement stmt = connection.prepareStatement("select * from VETERINARIO");
-				ResultSet resultSet = stmt.executeQuery();
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+                Statement statement = connection.createStatement();
 
-				while (resultSet.next()) {
-                                    
-                                        Veterinario vet = new Veterinario();
-					long id = resultSet.getLong("ID");
-					String nome = resultSet.getString("NOME");
+                statement.execute(createTable);
+                // lendo os registros
+                PreparedStatement stmt = connection.prepareStatement("SELECT ID,NOME,CRMV,ESPECIALIDADE FROM VETERINARIO");
+                ResultSet resultSet = stmt.executeQuery();
 
-					System.out.println(id + " - " + nome);
-				}
+                while (resultSet.next()) {
 
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
+                    lista.add(new Object[]{resultSet.getInt("ID"), resultSet.getString("NOME"), resultSet.getString("CRMV"), resultSet.getString("ESPECIALIDADE")});
+                }
 
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
 
-		return lista;
-	}
-	
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        return lista;
+    }
+
 }
