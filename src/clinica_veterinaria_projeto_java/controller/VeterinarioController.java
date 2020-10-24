@@ -6,7 +6,6 @@
 package clinica_veterinaria_projeto_java.controller;
 
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
-import clinica_veterinaria_projeto_java.model.facade.VeterinarioFacade;
 import clinica_veterinaria_projeto_java.model.facade.impl.VeterinarioFacadeImpl;
 import java.util.ArrayList;
 
@@ -27,9 +26,22 @@ public class VeterinarioController {
         facade.salvar(vet);
 
     }
+    
+    public void editar(Veterinario vet) {
+        facade.editar(vet);
+
+    }
+    
+    public void deletar(int id){
+        facade.remover(id);
+    }
 
     public ArrayList lista() {
         return facade.listarTodos();
+    }
+    
+     public ArrayList pesquisar(String characters) {
+        return facade.pesquisar(characters);
     }
 
 }

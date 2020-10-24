@@ -29,13 +29,18 @@ public class VeterinarioFacadeImpl implements VeterinarioFacade {
     }
     
     @Override
-    public ArrayList<Veterinario> listarTodos() {
+    public ArrayList listarTodos() {
         return vetDao.listar();
+    }
+    
+    @Override
+    public ArrayList pesquisar(String characters) {
+        return vetDao.pesquisar(characters);
     }
 
     @Override
-    public void remover(Veterinario vet) {
-    	vetDao.remover(vet);
+    public void remover(int id) {
+    	vetDao.remover(id);
     }
 
     @Override

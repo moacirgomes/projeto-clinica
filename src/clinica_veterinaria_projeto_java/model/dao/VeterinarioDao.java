@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
+
 
 import javax.swing.JOptionPane;
 
@@ -52,16 +52,89 @@ public class VeterinarioDao {
     }
 
     public void editar(Veterinario vet) {
+        try {
 
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+
+                Statement statement = connection.createStatement();
+
+                statement.execute(createTable);
+
+                // inserindo registros
+                statement.execute("UPDATE veterinario SET NOME = '" + vet.getNome() + "', ESPECIALIDADE = '" + vet.getEspecialista() + "', CRMV = '" + vet.getCrmv() + "' WHERE ID = " + vet.getIdVeterinario());
+
+                JOptionPane.showMessageDialog(null, "Veterinário editado com sucesso!");
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao editar o veterinário - " + e.getMessage());
+            }
+
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
-    public void remover(Veterinario vet) {
+    public void remover(int id) {
+        try {
 
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+
+                Statement statement = connection.createStatement();
+
+                statement.execute(createTable);
+
+                // inserindo registros
+                statement.execute("DELETE FROM veterinario WHERE ID = " + id);
+
+                JOptionPane.showMessageDialog(null, "Veterinário excluido com sucesso!");
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir o veterinário - " + e.getMessage());
+            }
+
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
-    public Veterinario consultar(long id) {
+   
 
-        return null;
+    public ArrayList pesquisar(String characters) {
+
+        ArrayList lista = new ArrayList();
+        try {
+
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+                Statement statement = connection.createStatement();
+
+                statement.execute(createTable);
+                // lendo os registros
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM VETERINARIO WHERE NOME = like '%" + characters + "%' OR CRMV = like '%" + characters + "%' OR ESPECIALIDADE = like '%" + characters + "%'");
+                ResultSet resultSet = stmt.executeQuery();
+
+                while (resultSet.next()) {
+
+                    lista.add(new Object[]{resultSet.getInt("ID"), resultSet.getString("NOME"), resultSet.getString("CRMV"), resultSet.getString("ESPECIALIDADE")});
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        return lista;
 
     }
 

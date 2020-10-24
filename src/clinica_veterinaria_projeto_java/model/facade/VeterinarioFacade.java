@@ -15,9 +15,10 @@ import java.util.List;
  */
 public interface VeterinarioFacade {
     void salvar(Veterinario vet);
-    void remover(Veterinario vet);
+    void remover(int id);
     void editar(Veterinario vet);
     ArrayList listarTodos();
+    ArrayList pesquisar(String characters);
     
     
 }

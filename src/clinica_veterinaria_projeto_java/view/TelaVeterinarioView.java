@@ -7,11 +7,17 @@ package clinica_veterinaria_projeto_java.view;
 
 import clinica_veterinaria_projeto_java.controller.VeterinarioController;
 import clinica_veterinaria_projeto_java.model.beans.Veterinario;
-import clinica_veterinaria_projeto_java.model.tables.ModeloVeterinario;
+import clinica_veterinaria_projeto_java.model.tables.ModeloTabela;
 import java.util.ArrayList;
+import java.util.Vector;
+import java.util.regex.PatternSyntaxException;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -19,12 +25,27 @@ import javax.swing.table.TableModel;
  */
 public class TelaVeterinarioView extends javax.swing.JFrame {
 
+    private VeterinarioController controller = new VeterinarioController();
+    private int idTemp = 0;
+    
+    //tabela veterinario
+    private String[] colunas = new String[]{"ID", "NOME", "CRMV", "ESPECIALIDADE"};
+    private ArrayList dados = controller.lista();
+    private ModeloTabela modelo = new ModeloTabela(dados, colunas);
+  
+    
+   
+
     /**
      * Creates new form TelaVeterinarioView
      */
     public TelaVeterinarioView() {
         initComponents();
         preencherTabela();
+        if (controller.lista().size() > 0) {
+            btnEditar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
     }
 
     /**
@@ -43,15 +64,16 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
         textCrmv = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cbEsp = new javax.swing.JComboBox<>();
-        jButton1Novo = new javax.swing.JButton();
-        jButton2Salvar = new javax.swing.JButton();
-        jButton3Editar = new javax.swing.JButton();
-        jButton4Cancelar = new javax.swing.JButton();
-        jButton5Excluir = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         textPesquisar = new javax.swing.JTextField();
-        jButton6Pesquisar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbVeterinarios = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -67,36 +89,63 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
 
         jLabel3.setText("CRMV:");
 
+        textNomeV.setEnabled(false);
+
+        textCrmv.setEnabled(false);
+
         jLabel2.setText("Especialista:");
 
-        cbEsp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cirugião", "Clinico Geral", " " }));
+        cbEsp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione uma Opção", "Cirugião", "Clinico Geral" }));
+        cbEsp.setEnabled(false);
         cbEsp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbEspActionPerformed(evt);
             }
         });
 
-        jButton1Novo.setText("Novo");
-
-        jButton2Salvar.setText("Salvar");
-        jButton2Salvar.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2SalvarActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
 
-        jButton3Editar.setText("Editar");
-        jButton3Editar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3EditarActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
-        jButton4Cancelar.setText("Cancelar");
+        btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
-        jButton5Excluir.setText("Excluir");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        jButton6Pesquisar.setText("Pesquisar");
+        btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        textPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textPesquisarKeyPressed(evt);
+            }
+        });
 
         tbVeterinarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,6 +160,8 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tbVeterinarios);
 
+        jLabel4.setText("Pesquisa(Filtro)");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -118,116 +169,228 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5Excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1Novo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2Salvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3Editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4Cancelar)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelNome)
+                                    .addComponent(textNomeV, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(146, 146, 146))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cbEsp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(10, 10, 10)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textCrmv, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(textPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelNome, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(textNomeV, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbEsp, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textCrmv, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(textPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6Pesquisar))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelNome)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textNomeV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbEsp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textCrmv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovo))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jButton1Novo)
+                        .addGap(20, 20, 20)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2Salvar)
-                        .addGap(9, 9, 9)
-                        .addComponent(jButton4Cancelar)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3Editar)
+                        .addComponent(textPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5Excluir))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelNome)
-                            .addComponent(textNomeV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(cbEsp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textCrmv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6Pesquisar))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 30, 650, 440);
+        jPanel1.setBounds(20, 30, 790, 460);
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jLabel1.setText("Cadastro de Veterinários ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(220, 0, 270, 30);
+        jLabel1.setBounds(300, 0, 270, 30);
 
-        setSize(new java.awt.Dimension(701, 529));
+        setSize(new java.awt.Dimension(848, 529));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3EditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3EditarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        int linha = tbVeterinarios.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma linha da tabela.");
+        } else {
+            int id = (int) tbVeterinarios.getValueAt(linha, 0);
+            idTemp = id;
+
+            textNomeV.setEnabled(true);
+            textNomeV.setText((String) tbVeterinarios.getValueAt(linha, 1));
+
+            textCrmv.setEnabled(true);
+            textCrmv.setText((String) tbVeterinarios.getValueAt(linha, 2));
+
+            cbEsp.setEnabled(true);
+            cbEsp.setSelectedItem((String) tbVeterinarios.getValueAt(linha, 3));
+
+            btnSalvar.setEnabled(true);
+            btnNovo.setEnabled(false);
+        }
+
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void cbEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEspActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbEspActionPerformed
 
-    private void jButton2SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2SalvarActionPerformed
-        Veterinario vet = new Veterinario(textNomeV.getText(), textCrmv.getText(), cbEsp.getSelectedItem().toString());
-        VeterinarioController vetC = new VeterinarioController();
-        vetC.cadastrar(vet);
-        System.out.println("goreti");
-    }//GEN-LAST:event_jButton2SalvarActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if (idTemp == 0) {
+            //novo veterinario
+            if (textNomeV.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Informe o nome do veterinário.");
+            } else if (cbEsp.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Escolha a especialidade do veterinário.");
+            } else if (textCrmv.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Informe o CRMV do veterinário.");
+            } else {
+                Veterinario vet = new Veterinario(textNomeV.getText(), textCrmv.getText(), cbEsp.getSelectedItem().toString());
+                controller.cadastrar(vet);
+                this.resetInputs();
+                this.preencherTabela();
+                btnSalvar.setEnabled(false);
+
+            }
+        } else {
+
+            //editar veterinario
+            if (textNomeV.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Informe o nome do veterinário.");
+            } else if (cbEsp.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Escolha a especialidade do veterinário.");
+            } else if (textCrmv.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Informe o CRMV do veterinário.");
+            } else {
+                Veterinario vet = new Veterinario(idTemp, textNomeV.getText(), textCrmv.getText(), cbEsp.getSelectedItem().toString());
+                controller.editar(vet);
+                this.resetInputs();
+                this.preencherTabela();
+                btnNovo.setEnabled(true);
+                btnSalvar.setEnabled(false);
+                idTemp = 0;
+            }
+
+        }
+
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        textNomeV.setEnabled(true);
+        textCrmv.setEnabled(true);
+        cbEsp.setEnabled(true);
+        btnSalvar.setEnabled(true);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = tbVeterinarios.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma linha da tabela.");
+        } else {
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja realmente excluir esse veterinário.");
+            if (resposta == JOptionPane.YES_OPTION) {
+                int id = (int) tbVeterinarios.getValueAt(linha, 0);
+                controller.deletar(id);
+                preencherTabela();
+            }
+
+        }
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+
+    private void textPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPesquisarKeyPressed
+       
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(modelo);
+        tbVeterinarios.setRowSorter(sorter);
+        if (textPesquisar.getText().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            try {
+                sorter.setRowFilter(RowFilter.regexFilter(textPesquisar.getText()));
+            } catch (PatternSyntaxException pse) {
+                System.out.println("Error ao filtrar");
+            }
+        }
+    }//GEN-LAST:event_textPesquisarKeyPressed
+
 
     public void preencherTabela() {
-        VeterinarioController controller = new VeterinarioController();
-        ArrayList dados = controller.lista();
-        
-        String[] colunas = new String[]{"ID", "NOME", "CRMV","ESPECIALIDADE"};
-        ModeloVeterinario modelo = new ModeloVeterinario(dados, colunas);
+
         tbVeterinarios.setModel(modelo);
         tbVeterinarios.getColumnModel().getColumn(0).setPreferredWidth(23);
         tbVeterinarios.getColumnModel().getColumn(0).setResizable(false);
-        tbVeterinarios.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tbVeterinarios.getColumnModel().getColumn(1).setPreferredWidth(250);
         tbVeterinarios.getColumnModel().getColumn(1).setResizable(false);
-        tbVeterinarios.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tbVeterinarios.getColumnModel().getColumn(2).setPreferredWidth(165);
         tbVeterinarios.getColumnModel().getColumn(2).setResizable(false);
-        tbVeterinarios.getColumnModel().getColumn(3).setPreferredWidth(80);
+        tbVeterinarios.getColumnModel().getColumn(3).setPreferredWidth(165);
         tbVeterinarios.getColumnModel().getColumn(3).setResizable(false);
         tbVeterinarios.getTableHeader().setReorderingAllowed(false);
         tbVeterinarios.setAutoResizeMode(tbVeterinarios.AUTO_RESIZE_OFF);
         tbVeterinarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public void resetInputs() {
+        textNomeV.setEnabled(false);
+        textCrmv.setEnabled(false);
+        cbEsp.setEnabled(false);
+
+        textNomeV.setText("");
+        textCrmv.setText("");
+        cbEsp.setSelectedIndex(0);
     }
 
     public static void main(String args[]) {
@@ -263,19 +426,20 @@ public class TelaVeterinarioView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbEsp;
-    private javax.swing.JButton jButton1Novo;
-    private javax.swing.JButton jButton2Salvar;
-    private javax.swing.JButton jButton3Editar;
-    private javax.swing.JButton jButton4Cancelar;
-    private javax.swing.JButton jButton5Excluir;
-    private javax.swing.JButton jButton6Pesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tbVeterinarios;
     private javax.swing.JTextField textCrmv;
     private javax.swing.JTextField textNomeV;

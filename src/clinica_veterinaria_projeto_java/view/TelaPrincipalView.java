@@ -34,7 +34,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         menuCadastro = new javax.swing.JMenu();
         jMenuCadastroCA = new javax.swing.JMenuItem();
         jMenuCadastroV = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuAdministrador = new javax.swing.JMenuItem();
         menuConsulta = new javax.swing.JMenu();
         menuLaboratorio = new javax.swing.JMenu();
         menuRemedio = new javax.swing.JMenu();
@@ -79,8 +79,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         });
         menuCadastro.add(jMenuCadastroV);
 
-        jMenuItem1.setText("jMenuItem1");
-        menuCadastro.add(jMenuItem1);
+        menuAdministrador.setText("Cadastro de Administrador");
+        menuAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAdministradorActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuAdministrador);
 
         jMenuBar1.add(menuCadastro);
 
@@ -117,6 +122,12 @@ public class TelaPrincipalView extends javax.swing.JFrame {
        TelaVeterinarioView telav = new TelaVeterinarioView();
        telav.setVisible(true);
     }//GEN-LAST:event_jMenuCadastroVActionPerformed
+
+    private void menuAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdministradorActionPerformed
+            // TODO add your handling code here:
+        TelaAdministrador telaAdm = new TelaAdministrador();
+        telaAdm.show();
+    }//GEN-LAST:event_menuAdministradorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,7 +172,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuCadastroCA;
     private javax.swing.JMenuItem jMenuCadastroV;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuAdministrador;
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenu menuConsulta;
     private javax.swing.JMenu menuLaboratorio;

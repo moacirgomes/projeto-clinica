@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import clinica_veterinaria_projeto_java.model.beans.Administrador;
+import java.util.ArrayList;
 
 public class AdministradorDao {
 
@@ -24,7 +25,7 @@ public class AdministradorDao {
 
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
 
-                System.out.println("Conexao realizada !!!!");
+
 
                 Statement statement = connection.createStatement();
 
@@ -48,22 +49,61 @@ public class AdministradorDao {
     }
 
     public void editar(Administrador adm) {
+        try {
 
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+
+                Statement statement = connection.createStatement();
+
+                statement.execute(createTable);
+
+                // inserindo registros
+                statement.execute("UPDATE administrador SET NOME = '" + adm.getNome() + "', USUARIO = '" + adm.getUsuario() + "', SENHA = '" + adm.getSenha() + "' WHERE ID = " + adm.getId());
+
+                JOptionPane.showMessageDialog(null, "Administrador editado com sucesso!");
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao editar o administrador - " + e.getMessage());
+            }
+
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
-    public void remover(Administrador adm) {
+    public void remover(int id) {
+        try {
 
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+
+                Statement statement = connection.createStatement();
+
+                statement.execute(createTable);
+
+                // inserindo registros
+                statement.execute("DELETE FROM administrador WHERE ID = " + id);
+
+                JOptionPane.showMessageDialog(null, "Administrador excluido com sucesso!");
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir o administrador - " + e.getMessage());
+            }
+
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
-    public Administrador consultar(Integer id) {
 
-        return null;
+    public ArrayList listar() {
 
-    }
-
-    public List<Administrador> listar() {
-
-        List<Administrador> lista = null;
+        ArrayList lista = new ArrayList();
         try {
 
             Class.forName("org.sqlite.JDBC");
@@ -73,14 +113,12 @@ public class AdministradorDao {
 
                 statement.execute(createTable);
                 // lendo os registros
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ADMINISTRADOR");
+                PreparedStatement stmt = connection.prepareStatement("SELECT ID,NOME,USUARIO,SENHA FROM ADMINISTRADOR");
                 ResultSet resultSet = stmt.executeQuery();
 
                 while (resultSet.next()) {
-                    Integer id = resultSet.getInt("ID");
-                    String nome = resultSet.getString("NOME");
 
-                    System.out.println(id + " - " + nome);
+                    lista.add(new Object[]{resultSet.getInt("ID"), resultSet.getString("NOME"), resultSet.getString("USUARIO"), resultSet.getString("SENHA")});
                 }
 
             } catch (SQLException e) {
