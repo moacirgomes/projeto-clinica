@@ -1,29 +1,33 @@
 package clinica_veterinaria_projeto_java.model.beans;
 
 public class Laboratorio {
-	private long idlabaratorio;
-	private String nome;
-	
-	public Laboratorio(long idlabaratorio, String nome) {
-		this.idlabaratorio = idlabaratorio;
-		this.nome = nome;
-	}
 
-	public long getIdlabaratorio() {
-		return idlabaratorio;
-	}
+    private Integer idLabaratorio;
+    private String nome;
 
-	public void setIdlabaratorio(long idlabaratorio) {
-		this.idlabaratorio = idlabaratorio;
-	}
+    public Laboratorio(Integer idLabaratorio, String nome) {
+        this.idLabaratorio = idLabaratorio;
+        this.nome = nome;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public Laboratorio(String nome) {
+        this.nome = nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
+    public Integer getIdlabaratorio() {
+        return idLabaratorio;
+    }
+
+    public void setIdlabaratorio(Integer idLabaratorio) {
+        this.idLabaratorio = idLabaratorio;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
 }

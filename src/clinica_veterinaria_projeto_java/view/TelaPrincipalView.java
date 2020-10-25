@@ -5,6 +5,8 @@
  */
 package clinica_veterinaria_projeto_java.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Junior
@@ -92,10 +94,25 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         menuConsulta.setText("Consulta");
         jMenuBar1.add(menuConsulta);
 
-        menuLaboratorio.setText("Labaratorio");
+        menuLaboratorio.setText("Labaratório");
+        menuLaboratorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuLaboratorioMouseClicked(evt);
+            }
+        });
+        menuLaboratorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLaboratorioActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuLaboratorio);
 
         menuRemedio.setText("Remedio");
+        menuRemedio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuRemedioMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuRemedio);
 
         MenuSair.setText("Sair");
@@ -128,6 +145,22 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         TelaAdministrador telaAdm = new TelaAdministrador();
         telaAdm.show();
     }//GEN-LAST:event_menuAdministradorActionPerformed
+
+    private void menuLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLaboratorioActionPerformed
+
+    }//GEN-LAST:event_menuLaboratorioActionPerformed
+
+    private void menuLaboratorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLaboratorioMouseClicked
+        // TODO add your handling code here:
+        TelaLaboratorioView telaLab = new TelaLaboratorioView();
+        telaLab.setVisible(true);
+    }//GEN-LAST:event_menuLaboratorioMouseClicked
+
+    private void menuRemedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRemedioMouseClicked
+        // TODO add your handling code here:
+        TelaRemedioView telaRemedio = new TelaRemedioView();
+        telaRemedio.setVisible(true);
+    }//GEN-LAST:event_menuRemedioMouseClicked
 
     /**
      * @param args the command line arguments
