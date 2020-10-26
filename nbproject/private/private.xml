@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Junior/Documents/NetBeansProjects/projeto-clinica/src/clinica_veterinaria_projeto_java/model/dao/AdministradorDao.java</file>
+            <file>file:/C:/Users/Junior/Documents/NetBeansProjects/projeto-clinica/src/clinica_veterinaria_projeto_java/view/TelaPrincipalView.java</file>
+            <file>file:/C:/Users/Junior/Documents/NetBeansProjects/projeto-clinica/src/clinica_veterinaria_projeto_java/view/TelaLoginView.java</file>
+            <file>file:/C:/Users/Junior/Documents/NetBeansProjects/projeto-clinica/src/clinica_veterinaria_projeto_java/view/TelaVeterinarioView.java</file>
+            <file>file:/C:/Users/Junior/Documents/NetBeansProjects/projeto-clinica/src/clinica_veterinaria_projeto_java/Principal.java</file>
+            <file>file:/C:/Users/Junior/Documents/NetBeansProjects/projeto-clinica/src/clinica_veterinaria_projeto_java/view/TelaRemedioView.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class Animal {
-	private long idAnimal;
+	private Integer idAnimal;
 	private String nome;
 	private String cor;
 	private String raca;
@@ -18,7 +18,7 @@ public class Animal {
 		
 	}
 
-	public Animal(long id, String nome, String cor, String raca, Date dataNascimento, String obeservacao, char sexo) {
+	public Animal(Integer id, String nome, String cor, String raca, Date dataNascimento, String obeservacao, char sexo) {
 		this.idAnimal = id;
 		this.nome = nome;
 		this.cor = cor;
@@ -27,10 +27,10 @@ public class Animal {
 		this.obeservacao = obeservacao;
 		this.sexo = sexo;
 	}
-	public long getId() {
+	public Integer getId() {
 		return idAnimal;
 	}
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.idAnimal = id;
 	}
 	public String getNome() {

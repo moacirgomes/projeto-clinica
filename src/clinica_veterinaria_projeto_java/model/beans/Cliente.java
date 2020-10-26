@@ -1,7 +1,7 @@
 package clinica_veterinaria_projeto_java.model.beans;
 
 public class Cliente {
-	private long clinte;
+	private Integer clinte;
 	private String nome;
 	private String endreco;
 	private String telefone;
@@ -11,7 +11,7 @@ public class Cliente {
 	public Cliente() {
 		
 	}
-	public Cliente(long clinte, String nome, String endreco, String telefone, String email, String cpf) {
+	public Cliente(Integer clinte, String nome, String endreco, String telefone, String email, String cpf) {
 		this.clinte = clinte;
 		this.nome = nome;
 		this.endreco = endreco;
@@ -19,10 +19,10 @@ public class Cliente {
 		this.email = email;
 		this.cpf = cpf;
 	}
-	public long getClinte() {
+	public Integer getIdClinte() {
 		return clinte;
 	}
-	public void setClinte(long clinte) {
+	public void setIdClinte(Integer clinte) {
 		this.clinte = clinte;
 	}
 	public String getNome() {

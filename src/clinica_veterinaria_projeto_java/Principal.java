@@ -11,7 +11,7 @@ public class Principal {
             
             
                 TelaLoginView tela = new TelaLoginView();
-                tela.show();
+                tela.setVisible(true);
 		//AdministradorDao dao = new AdministradorDao();
 		//Administrador adm = new Administrador("Junior Teste", "junior", "123456");
 		//dao.salvar(adm);

@@ -46,13 +46,20 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuLaboratorio">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Labaratorio"/>
+            <Property name="text" type="java.lang.String" value="Labarat&#xf3;rio"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuLaboratorioMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuLaboratorioActionPerformed"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuRemedio">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remedio"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuRemedioMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuSair">
           <Properties>
