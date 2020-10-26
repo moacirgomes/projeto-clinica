@@ -5,10 +5,20 @@
  */
 package clinica_veterinaria_projeto_java.model.facade;
 
+import clinica_veterinaria_projeto_java.model.beans.Consulta;
+import java.util.ArrayList;
+
 /**
  *
  * @author Junior
  */
 public interface ConsultaFacade {
+     void salvar(Consulta consulta);
+    
+    void remover(int id);
+
+    void editar(Consulta consulta);
+
+    ArrayList listarTodos();
     
 }

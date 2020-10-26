@@ -3,7 +3,7 @@ package clinica_veterinaria_projeto_java.model.beans;
 import java.sql.Date;
 
 public class Consulta {
-	private long idConsulta;
+	private Integer idConsulta;
 	private String resumo;
 	private String tipoConsulta;
 	private Date dataConsulta;
@@ -11,17 +11,17 @@ public class Consulta {
 	public Consulta() {
 		
 	}
-	public Consulta(long idConsulta, String resumo, String tipoConsulta, Date dataConsulta) {
+	public Consulta(Integer idConsulta, String resumo, String tipoConsulta, Date dataConsulta) {
 		
 		this.idConsulta = idConsulta;
 		this.resumo = resumo;
 		this.tipoConsulta = tipoConsulta;
 		this.dataConsulta = dataConsulta;
 	}
-	public long getIdConsulta() {
+	public Integer getIdConsulta() {
 		return idConsulta;
 	}
-	public void setIdConsulta(long idConsulta) {
+	public void setIdConsulta(Integer idConsulta) {
 		this.idConsulta = idConsulta;
 	}
 	public String getResumo() {

@@ -19,6 +19,13 @@ public class Cliente {
 		this.email = email;
 		this.cpf = cpf;
 	}
+        public Cliente(String nome, String endreco, String telefone, String email, String cpf) {
+		this.nome = nome;
+		this.endreco = endreco;
+		this.telefone = telefone;
+		this.email = email;
+		this.cpf = cpf;
+	}
 	public Integer getIdClinte() {
 		return clinte;
 	}

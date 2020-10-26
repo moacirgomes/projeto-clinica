@@ -369,10 +369,10 @@ public class TelaAdministrador extends javax.swing.JFrame {
         txtNome.setEnabled(false);
         txtUsuario.setEnabled(false);
         txtSenha.setEnabled(false);
-
         txtNome.setText("");
         txtUsuario.setText("");
         txtSenha.setText("");
+        
     }
     /**
      * @param args the command line arguments

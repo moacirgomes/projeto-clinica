@@ -34,9 +34,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jLabelFundoPricipal = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
-        jMenuCadastroCA = new javax.swing.JMenuItem();
         jMenuCadastroV = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuConsulta = new javax.swing.JMenu();
         menuLaboratorio = new javax.swing.JMenu();
         menuRemedio = new javax.swing.JMenu();
@@ -70,10 +70,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         menuCadastro.setText("Cadastro ");
 
-        jMenuCadastroCA.setText("Cadastro de Clientes e Animal");
-        menuCadastro.add(jMenuCadastroCA);
-
-        jMenuCadastroV.setText("Cadastro de Veterinario ");
+        jMenuCadastroV.setText("Cadastro  Veterinario ");
         jMenuCadastroV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuCadastroVActionPerformed(evt);
@@ -81,13 +78,21 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         });
         menuCadastro.add(jMenuCadastroV);
 
-        menuAdministrador.setText("Cadastro de Administrador");
+        menuAdministrador.setText("Cadastro Administrador");
         menuAdministrador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuAdministradorActionPerformed(evt);
             }
         });
         menuCadastro.add(menuAdministrador);
+
+        jMenuItem1.setText("Cadastro Cliente");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(jMenuItem1);
 
         jMenuBar1.add(menuCadastro);
 
@@ -162,6 +167,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         telaRemedio.setVisible(true);
     }//GEN-LAST:event_menuRemedioMouseClicked
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        TelaClienteAnimalView telaClienteA = new TelaClienteAnimalView();
+        telaClienteA.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,8 +213,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFundoPricipal;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuCadastroCA;
     private javax.swing.JMenuItem jMenuCadastroV;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem menuAdministrador;
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenu menuConsulta;
