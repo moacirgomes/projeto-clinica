@@ -62,7 +62,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jItenalFrame.setVisible(true);
         jItenalFrame.getContentPane().setLayout(null);
         getContentPane().add(jItenalFrame);
-        jItenalFrame.setBounds(-10, 120, 980, 400);
+        jItenalFrame.setBounds(20, 50, 920, 400);
 
         jLabelFundoPricipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinica_veterinaria_projeto_java/imagens/fundo_telaprincipal.jpg"))); // NOI18N
         getContentPane().add(jLabelFundoPricipal);
@@ -112,7 +112,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuLaboratorio);
 
-        menuRemedio.setText("Remedio");
+        menuRemedio.setText("Remédio");
         menuRemedio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuRemedioMouseClicked(evt);

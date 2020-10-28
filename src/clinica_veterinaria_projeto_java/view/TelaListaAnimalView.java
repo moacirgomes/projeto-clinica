@@ -27,17 +27,24 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
      */
     private AnimalController controller = new AnimalController();
     private int idTemp = 0;
-    private String[] colunas = new String[]{"ID", "NOME","COR", "RAÇA", "DATA", "SEXO", "OBSERVAÇÃO"};
+    private String[] colunas = new String[]{"ID", "NOME", "COR", "RAÇA", "DATA", "SEXO", "OBSERVAÇÃO"};
     private Integer idCliente;
-
-    public TelaListaAnimalView() {
+    
+    public TelaListaAnimalView(Integer idCliente, String nomeCliente) {
         initComponents();
-        this.preencherTabela();
-        if (controller.lista().size() > 0) {
+        this.preencherTabela(idCliente);
+        lbNomeCliente.setText(nomeCliente);
+        this.idCliente = idCliente;
+        if (controller.lista(idCliente).size() > 0) {
             btnEditar.setEnabled(true);
             btnExcluir.setEnabled(true);
         }
+        
+    }    
 
+    public TelaListaAnimalView() {
+        initComponents();
+        
     }
 
     /**
@@ -75,10 +82,11 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObservacao = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
+        lbNomeCliente = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jLabel1.setText("Cadastro de Animal");
@@ -235,9 +243,10 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
                     .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,18 +257,20 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)))
+                        .addComponent(btnCancelar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        lbNomeCliente.setText("Nome Cliente");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,17 +280,22 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(308, 308, 308))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))))
+                        .addComponent(lbNomeCliente)
+                        .addGap(373, 373, 373))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbNomeCliente)
+                .addGap(4, 4, 4)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -299,67 +315,79 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
+        
         if (idTemp == 0) {
             //novo adm
 
             if (txtNome.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do animail.");
-            }else if (txtCor.getText().equals("")) {
+            } else if (txtCor.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe a cor do animail.");
-            }else if (txtRaca.getText().equals("")) {
+            } else if (txtRaca.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe a raça do animail.");
-            }else if (txtData.getText().equals("")) {
+            } else if (txtData.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe a data de nascimento do animal.");
-            }else if (cbSexo.getSelectedIndex() == 0) {
+            } else if (cbSexo.getSelectedIndex() == 0) {
                 JOptionPane.showMessageDialog(null, "Informe o sexo do animail.");
-            }else {
-                Animal animal = new Animal(txtNome.getText(),txtCor.getText(),txtRaca.getText(),null,txtObservacao.getText(), cbSexo.getSelectedItem().toString(),idCliente);
+            } else {
+                Animal animal = new Animal(txtNome.getText(), txtCor.getText(), txtRaca.getText(), null, txtObservacao.getText(), cbSexo.getSelectedItem().toString(), idCliente);
                 controller.cadastrar(animal);
                 this.resetInputs();
-                this.preencherTabela();
+                this.preencherTabela(idCliente);
                 btnSalvar.setEnabled(false);
-
+                
             }
         } else {
-
-             if (txtNome.getText().equals("")) {
+            
+            if (txtNome.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do animail.");
-            }else if (txtCor.getText().equals("")) {
+            } else if (txtCor.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe a cor do animail.");
-            }else if (txtRaca.getText().equals("")) {
+            } else if (txtRaca.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe a raça do animail.");
-            }else if (txtData.getText().equals("")) {
+            } else if (txtData.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Informe a data de nascimento do animal.");
-            }else if (cbSexo.getSelectedIndex() == 0) {
+            } else if (cbSexo.getSelectedIndex() == 0) {
                 JOptionPane.showMessageDialog(null, "Informe o sexo do animail.");
-            }else {
-                Animal animal = new Animal(idTemp,txtNome.getText(),txtCor.getText(),txtRaca.getText(),null,txtObservacao.getText(), cbSexo.getSelectedItem().toString(),idCliente);
+            } else {
+                Animal animal = new Animal(idTemp, txtNome.getText(), txtCor.getText(), txtRaca.getText(), null, txtObservacao.getText(), cbSexo.getSelectedItem().toString(), idCliente);
                 controller.editar(animal);
                 this.resetInputs();
-                this.preencherTabela();
+                this.preencherTabela(idCliente);
                 btnNovo.setEnabled(true);
                 btnSalvar.setEnabled(false);
                 idTemp = 0;
             }
-
+            
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
+        
         int linha = tbAnimais.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione uma linha da tabela.");
         } else {
             int id = (int) tbAnimais.getValueAt(linha, 0);
             idTemp = id;
-
+            
             txtNome.setEnabled(true);
             txtNome.setText((String) tbAnimais.getValueAt(linha, 1));
+            
+            txtCor.setEnabled(true);
+            txtCor.setText((String) tbAnimais.getValueAt(linha, 2));
+            txtRaca.setEnabled(true);
+            txtRaca.setText((String) tbAnimais.getValueAt(linha, 3));
+            txtData.setEnabled(true);
+            txtData.setText((String) tbAnimais.getValueAt(linha, 4));
+            
+            cbSexo.setEnabled(true);
+            cbSexo.setSelectedItem((String) tbAnimais.getValueAt(linha, 5));
+            txtObservacao.setEnabled(true);
+            txtObservacao.setText((String) tbAnimais.getValueAt(linha, 6));
             btnSalvar.setEnabled(true);
             btnNovo.setEnabled(false);
-
+            
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -376,16 +404,16 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
             if (resposta == JOptionPane.YES_OPTION) {
                 int id = (int) tbAnimais.getValueAt(linha, 0);
                 controller.deletar(id);
-
-                preencherTabela();
-
+                
+                preencherTabela(idCliente);
+                
             }
-
+            
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyPressed
-
+        
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tbAnimais.getModel());
         tbAnimais.setRowSorter(sorter);
         if (txtPesquisar.getText().length() == 0) {
@@ -398,31 +426,51 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtPesquisarKeyPressed
-
-    public void setIdClienteView(Integer id) {
-        this.idCliente = id;
-
-    }
     
-    public void preencherTabela() {
-        ArrayList dados = controller.lista();
+    public void preencherTabela(Integer idCliente) {
+        ArrayList dados = controller.lista(idCliente);
         ModeloTabela modelo = new ModeloTabela(dados, colunas);
         tbAnimais.setModel(modelo);
         tbAnimais.getColumnModel().getColumn(0).setPreferredWidth(53);
         tbAnimais.getColumnModel().getColumn(0).setResizable(false);
-        tbAnimais.getColumnModel().getColumn(1).setPreferredWidth(270);
+        tbAnimais.getColumnModel().getColumn(1).setPreferredWidth(200);
         tbAnimais.getColumnModel().getColumn(1).setResizable(false);
+        tbAnimais.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tbAnimais.getColumnModel().getColumn(2).setResizable(false);
+        tbAnimais.getColumnModel().getColumn(3).setPreferredWidth(200);
+        tbAnimais.getColumnModel().getColumn(3).setResizable(false);
+        tbAnimais.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tbAnimais.getColumnModel().getColumn(4).setResizable(false);
+        tbAnimais.getColumnModel().getColumn(5).setPreferredWidth(200);
+        tbAnimais.getColumnModel().getColumn(5).setResizable(false);
+        tbAnimais.getColumnModel().getColumn(6).setPreferredWidth(200);
+        tbAnimais.getColumnModel().getColumn(6).setResizable(false);
         tbAnimais.getTableHeader().setReorderingAllowed(false);
         tbAnimais.setAutoResizeMode(tbAnimais.AUTO_RESIZE_OFF);
         tbAnimais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
+    
     public void resetInputs() {
         txtNome.setEnabled(false);
         txtNome.setText("");
-        if (controller.lista().size() > 0) {
+        txtCor.setEnabled(false);
+        txtCor.setText("");
+        txtRaca.setEnabled(false);
+        txtRaca.setText("");
+        txtData.setEnabled(false);
+        txtData.setText("");
+        txtObservacao.setEnabled(false);
+        txtObservacao.setText("");
+        cbSexo.setEnabled(false);
+        cbSexo.setSelectedIndex(0);
+        if (controller.lista(idCliente).size() >= 1) {
             btnEditar.setEnabled(true);
             btnExcluir.setEnabled(true);
+            
+        } else {
+            btnEditar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            
         }
         
     }
@@ -482,6 +530,7 @@ public class TelaListaAnimalView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel lbNomeCliente;
     private javax.swing.JTable tbAnimais;
     private javax.swing.JTextField txtCor;
     private javax.swing.JTextField txtData;

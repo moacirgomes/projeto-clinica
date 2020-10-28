@@ -28,8 +28,8 @@ public class AnimalFacadeImpl implements AnimalFacade {
     }
 
     @Override
-    public ArrayList listarTodos() {
-        return animalDao.listar();
+    public ArrayList listarTodos(Integer idClinete) {
+        return animalDao.listar(idClinete);
     }
 
     @Override

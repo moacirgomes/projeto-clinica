@@ -35,8 +35,8 @@ public class AnimalController {
         facade.remover(id);
     }
 
-    public ArrayList lista() {
-        return facade.listarTodos();
+    public ArrayList lista(Integer idCliente) {
+        return facade.listarTodos(idCliente);
     }
     
 }

@@ -24,7 +24,7 @@ public class TelaClienteAnimalView extends javax.swing.JFrame {
 
     private ClienteController controller = new ClienteController();
     private int idTemp = 0;
-   
+
     //tabela veterinario
     private String[] colunas = new String[]{"ID", "NOME", "ENDEREÇO", "TELEFONE", "EMAIL", "CPF"};
 
@@ -426,10 +426,9 @@ public class TelaClienteAnimalView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Selecione uma linha da tabela.");
         } else {
             int id = (int) tbClientes.getValueAt(linha, 0);
-            TelaListaAnimalView telaAnimal = new TelaListaAnimalView();
-            telaAnimal.setIdClienteView(id);
+            String nome = (String) tbClientes.getValueAt(linha, 1);
+            TelaListaAnimalView telaAnimal = new TelaListaAnimalView(id, nome);
             telaAnimal.setVisible(true);
-            
 
         }
 

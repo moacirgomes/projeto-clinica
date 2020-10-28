@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class AnimalDao {
     
-    private static String createTable = "CREATE TABLE IF NOT EXISTS Animal( ID INTEGER PRIMARY KEY AUTOINCREMENT, NOME VARCHAR , COR VARCHAR, RACA VARCHAR, DATANASCIMENTO DATE, OBESERVACAO VARCHAR, SEXO CHAR)";
+    private static String createTable = "CREATE TABLE IF NOT EXISTS ANIMAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, NOME VARCHAR , COR VARCHAR, RACA VARCHAR, DATANASCIMENTO DATE, OBSERVACAO VARCHAR, SEXO VARCHAR, idCliente INTEGER NOT NULL, CONSTRAINT fk_cliente FOREIGN KEY(idCliente) REFERENCES CLIENTE(ID))";
 
     public void salvar(Animal animal){
 
@@ -36,7 +36,7 @@ public class AnimalDao {
                 statement.execute(createTable);
 
                 // inserindo registros
-                statement.execute("INSERT INTO CLIENTE(NOME, COR, RACA, DATANASCIMENTO, OBSERVACAO, SEXO) VALUES ('" + animal.getNome() + "','" + animal.getCor()+ "','" + animal.getRaca()+ "','" + animal.getDataNascimento()+ "','" + animal.getDataNascimento()+ "','" + animal.getObeservacao()+ "','" + animal.getSexo()+ "')");
+                statement.execute("INSERT INTO Animal(NOME, COR, RACA, DATANASCIMENTO, OBSERVACAO, SEXO,idCliente) VALUES ('" + animal.getNome() + "','" + animal.getCor()+ "','" + animal.getRaca()+ "','" + animal.getDataNascimento()+ "','" + animal.getObeservacao()+ "','" + animal.getSexo()+ "',"+animal.getIdCliente()+")");
 
                 JOptionPane.showMessageDialog(null, "Animal cadastrado com sucesso!");
 
@@ -63,7 +63,7 @@ public class AnimalDao {
                 statement.execute(createTable);
 
                 // inserindo registros
-                statement.execute("UPDATE animal SET NOME = '" + animal.getNome() + "', COR = '" + animal.getCor()+ "', RACA = '" + animal.getRaca()+ "', DATANASCIMENTO = '" + animal.getDataNascimento()+ "', OBSERVACAO = '" + animal.getObeservacao()+"', Sexo'" + animal.getSexo()+"' WHERE ID = " + animal.getId());
+                statement.execute("UPDATE animal SET NOME = '" + animal.getNome() + "', COR = '" + animal.getCor()+ "', RACA = '" + animal.getRaca()+ "', DATANASCIMENTO = '" + animal.getDataNascimento()+ "', OBSERVACAO = '" + animal.getObeservacao()+"', Sexo ='" + animal.getSexo()+"' WHERE ID = " + animal.getId());
 
                 JOptionPane.showMessageDialog(null, "Animal editado com sucesso!");
 
@@ -103,7 +103,7 @@ public class AnimalDao {
         }
     }
 
-    public ArrayList listar() {
+    public ArrayList listar(Integer idCliente) {
 
         ArrayList lista = new ArrayList();
         try {
@@ -115,12 +115,12 @@ public class AnimalDao {
 
                 statement.execute(createTable);
                 // lendo os registros
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ANIMAL");
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ANIMAL WHERE idCliente ="+idCliente);
                 ResultSet resultSet = stmt.executeQuery();
 
                 while (resultSet.next()) {
 
-                    lista.add(new Object[]{resultSet.getInt("ID"), resultSet.getString("NOME"), resultSet.getString("COR"), resultSet.getString("RACA"), resultSet.getString("DATANASCIMENTO"), resultSet.getString("OBSERVACAO"), resultSet.getString("SEXO")});
+                    lista.add(new Object[]{resultSet.getInt("ID"), resultSet.getString("NOME"), resultSet.getString("COR"), resultSet.getString("RACA"), resultSet.getString("DATANASCIMENTO"),  resultSet.getString("SEXO"), resultSet.getString("OBSERVACAO")});
                 }
 
             } catch (SQLException e) {

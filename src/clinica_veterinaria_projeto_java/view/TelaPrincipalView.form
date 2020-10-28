@@ -58,7 +58,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuRemedio">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Remedio"/>
+            <Property name="text" type="java.lang.String" value="Rem&#xe9;dio"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuRemedioMouseClicked"/>
@@ -117,7 +117,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="-10" y="120" width="980" height="400"/>
+          <AbsoluteConstraints x="20" y="50" width="920" height="400"/>
         </Constraint>
       </Constraints>
 

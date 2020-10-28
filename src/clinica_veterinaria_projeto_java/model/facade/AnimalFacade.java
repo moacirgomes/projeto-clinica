@@ -19,6 +19,6 @@ public interface AnimalFacade {
 
     void editar(Animal animal);
 
-    ArrayList listarTodos();  
+    ArrayList listarTodos(Integer idCliente);  
     
 }
